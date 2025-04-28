@@ -1,0 +1,23 @@
+from transformers import pipeline
+
+# 1. Load the ready-made model
+classifier = pipeline("text-classification", model="bert-base-uncased", tokenizer="bert-base-uncased")
+
+# 2. Function to predict
+def predict_job_description(description):
+    result = classifier(description)[0]
+    label = result['label']
+
+    # Simple threshold-based decision
+    if label == 'LABEL_1':  # depends on how model trained; here adjusting manually
+        prediction = "Real"
+    else:
+        prediction = "Fake"
+
+    print(f"Prediction: {prediction}")
+
+# 3. Example usage
+if __name__ == "__main__":
+    # Example job description
+    description = input("Enter the job description: ")
+    predict_job_description(description)
